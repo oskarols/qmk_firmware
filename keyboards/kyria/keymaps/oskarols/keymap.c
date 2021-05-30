@@ -15,6 +15,8 @@
  */
 #include QMK_KEYBOARD_H
 
+#include "keymap_swedish.h"
+
 enum layers {
     _QWERTY = 0,
     _LOWER,
@@ -129,6 +131,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+/*
+ *   ___  _     _____ ____    ____
+ *  / _ \| |   | ____|  _ \  / ___|  ___ _ __ ___  ___ _ __
+ * | | | | |   |  _| | | | | \___ \ / __| '__/ _ \/ _ \ '_ \
+ * | |_| | |___| |___| |_| |  ___) | (__| | |  __/  __/ | | |
+ *  \___/|_____|_____|____/  |____/ \___|_|  \___|\___|_| |_|
+ *
+ */
+
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 	return OLED_ROTATION_180;
@@ -197,14 +208,56 @@ void oled_task_user(void) {
 }
 #endif
 
+
+/*
+ *  _  __             ____                _
+ * | |/ /___ _   _   / ___|___  _ __ ___ | |__   ___  ___
+ * | ' // _ \ | | | | |   / _ \| '_ ` _ \| '_ \ / _ \/ __|
+ * | . \  __/ |_| | | |__| (_) | | | | | | |_) | (_) \__ \
+ * |_|\_\___|\__, |  \____\___/|_| |_| |_|_.__/ \___/|___/
+ *           |___/
+ */
+
+enum combos {
+  AO,
+  AE,
+  OE
+};
+
+// A + O = Å
+const uint16_t PROGMEM ao_combo[] = {KC_A, KC_O, COMBO_END};
+
+// A + E = Ä
+const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
+
+// O + E = Ö
+const uint16_t PROGMEM oe_combo[] = {KC_O, KC_E, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [AO] = COMBO(ao_combo, SE_ARNG),
+  [AE] = COMBO(ae_combo, SE_ADIA),
+  [OE] = COMBO(oe_combo, SE_ODIA)
+};
+
+
+/*
+ *  _____                     _
+ * | ____|_ __   ___ ___   __| | ___ _ __
+ * |  _| | '_ \ / __/ _ \ / _` |/ _ \ '__|
+ * | |___| | | | (_| (_) | (_| |  __/ |
+ * |_____|_| |_|\___\___/ \__,_|\___|_|
+ *
+ */
+
+
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
-        // Volume control
+        // mouse wheel
         if (clockwise) {
-            tap_code(KC_VOLU);
+            tap_code(KC_WH_D);
         } else {
-            tap_code(KC_VOLD);
+            tap_code(KC_WH_U);
         }
     }
     else if (index == 1) {
@@ -213,6 +266,13 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_PGDN);
         } else {
             tap_code(KC_PGUP);
+        }
+    }
+    else if (index == 2) {
+        if (clockwise) {
+            tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
         }
     }
 }
