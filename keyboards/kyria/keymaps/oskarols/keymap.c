@@ -252,6 +252,7 @@ combo_t key_combos[COMBO_COUNT] = {
 
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
+    // Probably the left side encoder (not enabled)
     if (index == 0) {
         // mouse wheel
         if (clockwise) {
@@ -260,20 +261,31 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_WH_U);
         }
     }
+    // right side encoder
     else if (index == 1) {
-        // Page up/Page down
-        if (clockwise) {
-            tap_code(KC_PGDN);
-        } else {
-            tap_code(KC_PGUP);
+        if (IS_LAYER_ON(_QWERTY)) {
+            // Mouse wheel scroll
+            if (clockwise) {
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+            }
         }
-    }
-    else if (index == 2) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
+        else if (IS_LAYER_ON(_LOWER)) {
+            if (clockwise) {
+                tap_code(KC_DOWN);
+            } else {
+                tap_code(KC_UP);
+            }
         }
+        else if (IS_LAYER_ON(_RAISE)) {
+            if (clockwise) {
+                tap_code(KC_VOLU);
+            } else {
+                tap_code(KC_VOLD);
+            }
+        }
+
     }
 }
 #endif
