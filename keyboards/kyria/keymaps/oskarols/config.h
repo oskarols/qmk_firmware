@@ -35,4 +35,4 @@
 // hardcode setting the master to always be on right side
 # define MASTER_RIGHT
 
-# define COMBO_COUNT 3
+# define COMBO_COUNT 4
