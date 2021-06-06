@@ -221,7 +221,8 @@ void oled_task_user(void) {
 enum combos {
   AO,
   AE,
-  OE
+  OE,
+  UY
 };
 
 // A + O = Å
@@ -233,10 +234,14 @@ const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
 // O + E = Ö
 const uint16_t PROGMEM oe_combo[] = {KC_O, KC_E, COMBO_END};
 
+// U + . = Ü
+const uint16_t PROGMEM uy_combo[] = {KC_U, KC_DOT, COMBO_END};
+
 combo_t key_combos[COMBO_COUNT] = {
   [AO] = COMBO(ao_combo, SE_ARNG),
   [AE] = COMBO(ae_combo, SE_ADIA),
-  [OE] = COMBO(oe_combo, SE_ODIA)
+  [OE] = COMBO(oe_combo, SE_ODIA),
+  [UY] = COMBO(uy_combo, KC_LBRC)
 };
 
 
