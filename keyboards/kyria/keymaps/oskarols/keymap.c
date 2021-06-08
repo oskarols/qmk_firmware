@@ -594,16 +594,16 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         }
         else if (IS_LAYER_ON(_SYMBOL)) {
             if (clockwise) {
-                tap_code(KC_DOWN);
+                tap_code16(C(KC_Y));
             } else {
-                tap_code(KC_UP);
+                tap_code16(C(KC_Z));
             }
         }
         else if (IS_LAYER_ON(_NAV)) {
             if (clockwise) {
-                tap_code(KC_VOLU);
+                tap_code(KC_DOWN);
             } else {
-                tap_code(KC_VOLD);
+                tap_code(KC_UP);
             }
         }
     }
