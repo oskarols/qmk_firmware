@@ -35,7 +35,7 @@
 // hardcode setting the master to always be on right side
 # define MASTER_RIGHT
 
-# define COMBO_COUNT 8
+# define COMBO_COUNT 34
 
 // time to complete the combo sequence
 # define LEADER_TIMEOUT 150
