@@ -221,16 +221,77 @@ void oled_task_user(void) {
  *           |___/
  */
 
+/*
+ * J + Left half combos
+ *
+ * ,------------------------------------------------.
+ * |        |   \   |   /   |   <   |   >   |   =   |
+ * |--------+-------+-------+-------+-------+-------|
+ * |        |   {   |   }   |   (   |   )   |   |   |
+ * |--------+-------+-------+-------+-------+-------+-------------.
+ * |        |       |       |   [   |   ]   |       |      |      |
+ * `------------------------+-------+-------+-------+------+------|
+ *                          |       |       |       |      |      |
+ *                          |       |       |       |      |      |
+ *                          `------------------------------------'
+ */
+
+ /*
+ * K + Left half combos
+ *
+ * ,------------------------------------------------.
+ * |        |   !   |   @   |   #   |   &   |   ?   |
+ * |--------+-------+-------+-------+-------+-------|
+ * |        |   %   |   +   |   '   |   "   |   `   |
+ * |--------+-------+-------+-------+-------+-------+-------------.
+ * |        |   ^   |   *   |   ~   |   $   |   €   |      |      |
+ * `------------------------+-------+-------+-------+------+------|
+ *                          |       |       |       |      |      |
+ *                          |       |       |       |      |      |
+ *                          `------------------------------------'
+ */
 enum combos {
   AO,
   AE,
   OE,
-  UY,
+  UE,
 
-  FH,
-  FJ,
-  FK,
-  FL
+  JQ,
+  JW,
+  JE,
+  JR,
+  JT,
+
+  JA,
+  JS,
+  JD,
+  JF,
+  JG,
+
+  JZ,
+  JX,
+  JC,
+  JV,
+  JB,
+
+
+  KQ,
+  KW,
+  KE,
+  KR,
+  KT,
+
+  KA,
+  KS,
+  KD,
+  KF,
+  KG,
+
+  KZ,
+  KX,
+  KC,
+  KV,
+  KB
 };
 
 // A + O = Å
@@ -243,54 +304,265 @@ const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM oe_combo[] = {KC_O, KC_E, COMBO_END};
 
 // U + . = Ü
-const uint16_t PROGMEM uy_combo[] = {KC_U, KC_DOT, COMBO_END};
+const uint16_t PROGMEM ue_combo[] = {KC_U, KC_E, COMBO_END};
 
 
-// F + H = |
-// F + J = backslash
-const uint16_t PROGMEM fh_combo[] = {KC_F, KC_H, COMBO_END};
-const uint16_t PROGMEM fj_combo[] = {KC_F, KC_J, COMBO_END};
+const uint16_t PROGMEM jq_combo[] = {KC_J, KC_Q, COMBO_END};
+const uint16_t PROGMEM jw_combo[] = {KC_J, KC_W, COMBO_END};
+const uint16_t PROGMEM je_combo[] = {KC_J, KC_E, COMBO_END};
+const uint16_t PROGMEM jr_combo[] = {KC_J, KC_R, COMBO_END};
+const uint16_t PROGMEM jt_combo[] = {KC_J, KC_T, COMBO_END};
 
-// F + K = /
-// F + L = ]
-const uint16_t PROGMEM fk_combo[] = {KC_F, KC_K, COMBO_END};
-const uint16_t PROGMEM fl_combo[] = {KC_F, KC_L, COMBO_END};
+const uint16_t PROGMEM ja_combo[] = {KC_J, KC_A, COMBO_END};
+const uint16_t PROGMEM js_combo[] = {KC_J, KC_S, COMBO_END};
+const uint16_t PROGMEM jd_combo[] = {KC_J, KC_D, COMBO_END};
+const uint16_t PROGMEM jf_combo[] = {KC_J, KC_F, COMBO_END};
+const uint16_t PROGMEM jg_combo[] = {KC_J, KC_G, COMBO_END};
 
+const uint16_t PROGMEM jz_combo[] = {KC_J, KC_Z, COMBO_END};
+const uint16_t PROGMEM jx_combo[] = {KC_J, KC_X, COMBO_END};
+const uint16_t PROGMEM jc_combo[] = {KC_J, KC_C, COMBO_END};
+const uint16_t PROGMEM jv_combo[] = {KC_J, KC_V, COMBO_END};
+const uint16_t PROGMEM jb_combo[] = {KC_J, KC_B, COMBO_END};
+
+
+const uint16_t PROGMEM kq_combo[] = {KC_K, KC_Q, COMBO_END};
+const uint16_t PROGMEM kw_combo[] = {KC_K, KC_W, COMBO_END};
+const uint16_t PROGMEM ke_combo[] = {KC_K, KC_E, COMBO_END};
+const uint16_t PROGMEM kr_combo[] = {KC_K, KC_R, COMBO_END};
+const uint16_t PROGMEM kt_combo[] = {KC_K, KC_T, COMBO_END};
+
+const uint16_t PROGMEM ka_combo[] = {KC_K, KC_A, COMBO_END};
+const uint16_t PROGMEM ks_combo[] = {KC_K, KC_S, COMBO_END};
+const uint16_t PROGMEM kd_combo[] = {KC_K, KC_D, COMBO_END};
+const uint16_t PROGMEM kf_combo[] = {KC_K, KC_F, COMBO_END};
+const uint16_t PROGMEM kg_combo[] = {KC_K, KC_G, COMBO_END};
+
+const uint16_t PROGMEM kz_combo[] = {KC_K, KC_Z, COMBO_END};
+const uint16_t PROGMEM kx_combo[] = {KC_K, KC_X, COMBO_END};
+const uint16_t PROGMEM kc_combo[] = {KC_K, KC_C, COMBO_END};
+const uint16_t PROGMEM kv_combo[] = {KC_K, KC_V, COMBO_END};
+const uint16_t PROGMEM kb_combo[] = {KC_K, KC_B, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO] = COMBO(ao_combo, SE_ARNG),
   [AE] = COMBO(ae_combo, SE_ADIA),
   [OE] = COMBO(oe_combo, SE_ODIA),
-  [UY] = COMBO(uy_combo, KC_LBRC),
+  [UE] = COMBO_ACTION(ue_combo),
 
-  [FH] = COMBO_ACTION(fh_combo),
-  [FJ] = COMBO_ACTION(fj_combo),
-  [FK] = COMBO_ACTION(fk_combo),
-  [FL] = COMBO_ACTION(fl_combo)
+  [JQ] = COMBO_ACTION(jq_combo),
+  [JW] = COMBO_ACTION(jw_combo),
+  [JE] = COMBO_ACTION(je_combo),
+  [JR] = COMBO_ACTION(jr_combo),
+  [JT] = COMBO_ACTION(jt_combo),
+
+  [JA] = COMBO_ACTION(ja_combo),
+  [JS] = COMBO_ACTION(js_combo),
+  [JD] = COMBO_ACTION(jd_combo),
+  [JF] = COMBO_ACTION(jf_combo),
+  [JG] = COMBO_ACTION(jg_combo),
+
+  [JZ] = COMBO_ACTION(jz_combo),
+  [JX] = COMBO_ACTION(jx_combo),
+  [JC] = COMBO_ACTION(jc_combo),
+  [JV] = COMBO_ACTION(jv_combo),
+  [JB] = COMBO_ACTION(jb_combo),
+
+
+  [KQ] = COMBO_ACTION(kq_combo),
+  [KW] = COMBO_ACTION(kw_combo),
+  [KE] = COMBO_ACTION(ke_combo),
+  [KR] = COMBO_ACTION(kr_combo),
+  [KT] = COMBO_ACTION(kt_combo),
+
+  [KA] = COMBO_ACTION(ka_combo),
+  [KS] = COMBO_ACTION(ks_combo),
+  [KD] = COMBO_ACTION(kd_combo),
+  [KF] = COMBO_ACTION(kf_combo),
+  [KG] = COMBO_ACTION(kg_combo),
+
+  [KZ] = COMBO_ACTION(kz_combo),
+  [KX] = COMBO_ACTION(kx_combo),
+  [KC] = COMBO_ACTION(kc_combo),
+  [KV] = COMBO_ACTION(kv_combo),
+  [KB] = COMBO_ACTION(kb_combo)
+
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
-    case FH:
+    case UE:
       if (pressed) {
-        SEND_STRING("|");
+        tap_code(SE_DIAE);
+        tap_code(KC_U);
       }
       break;
-    case FJ:
+
+    // J COMBOS
+
+    // left row 1
+    case JQ:
       if (pressed) {
         SEND_STRING("\\");
       }
       break;
-    case FK:
+    case JW:
       if (pressed) {
         SEND_STRING("/");
       }
       break;
-    // case FL:
-    //   if (pressed) {
-    //     SEND_STRING("]");
-    //   }
-    //   break;
+    case JE:
+      if (pressed) {
+        SEND_STRING("<");
+      }
+      break;
+    case JR:
+      if (pressed) {
+        SEND_STRING(">");
+      }
+      break;
+    case JT:
+      if (pressed) {
+        SEND_STRING("=");
+      }
+      break;
+
+    // left row 2
+    case JA:
+      if (pressed) {
+        SEND_STRING("{");
+      }
+      break;
+    case JS:
+      if (pressed) {
+        SEND_STRING("}");
+      }
+      break;
+    case JD:
+      if (pressed) {
+        SEND_STRING("(");
+      }
+      break;
+    case JF:
+      if (pressed) {
+        SEND_STRING(")");
+      }
+      break;
+    case JG:
+      if (pressed) {
+        SEND_STRING("|");
+      }
+      break;
+
+    // left row 3
+    case JZ:
+      if (pressed) {
+        SEND_STRING("");
+      }
+      break;
+    case JX:
+      if (pressed) {
+        SEND_STRING("");
+      }
+      break;
+    case JC:
+      if (pressed) {
+        SEND_STRING("[");
+      }
+      break;
+    case JV:
+      if (pressed) {
+        SEND_STRING("]");
+      }
+      break;
+    case JB:
+      if (pressed) {
+        SEND_STRING("");
+      }
+      break;
+
+    // K COMBOS
+
+    // left row 1
+    case KQ:
+      if (pressed) {
+        SEND_STRING("!");
+      }
+      break;
+    case KW:
+      if (pressed) {
+        SEND_STRING("@");
+      }
+      break;
+    case KE:
+      if (pressed) {
+        SEND_STRING("#");
+      }
+      break;
+    case KR:
+      if (pressed) {
+        SEND_STRING("&");
+      }
+      break;
+    case KT:
+      if (pressed) {
+        SEND_STRING("?");
+      }
+      break;
+
+    // left row 2
+    case KA:
+      if (pressed) {
+        SEND_STRING("%");
+      }
+      break;
+    case KS:
+      if (pressed) {
+        SEND_STRING("+");
+      }
+      break;
+    case KD:
+      if (pressed) {
+        SEND_STRING("'");
+      }
+      break;
+    case KF:
+      if (pressed) {
+        SEND_STRING("\"");
+      }
+      break;
+    case KG:
+      if (pressed) {
+        SEND_STRING("`");
+      }
+      break;
+
+    // left row 3
+    case KZ:
+      if (pressed) {
+        SEND_STRING("^");
+      }
+      break;
+    case KX:
+      if (pressed) {
+        SEND_STRING("*");
+      }
+      break;
+    case KC:
+      if (pressed) {
+        SEND_STRING("~");
+      }
+      break;
+    case KV:
+      if (pressed) {
+        SEND_STRING("$");
+      }
+      break;
+    case KB:
+      if (pressed) {
+        SEND_STRING("");
+      }
+      break;
   }
 }
 /*
