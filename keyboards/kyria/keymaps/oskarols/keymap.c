@@ -32,21 +32,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |RAIS/ESC|   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  + ?   |
+ * |RAIS/ESC|   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/BS |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+ * |Ctrl/BS |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | RCtrl|        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |LShift|LShift|  |LShift|LShift|   N  |   M  | ,  ; | . :  | - _  |  Adj   |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  |Caps  |LShift|  |LShift|LShift|   N  |   M  | ,  ; | . :  | - _  |  Adj   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter| Lead| Tab  | Bksp | AltGr|
- *                        |      |      | Alt  | Symb | Nav  |  | Nav  |     |      |      |      |
+ *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter|LShift| Tab  | Bksp | AltGr|
+ *                        |      |      | Alt  | Nav  | Symb |  | Symb |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-      LT(_NAV, KC_ESC),       KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-      MT(MOD_LCTL, KC_BSPC),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      KC_LSFT,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_LSFT,   KC_LSFT, KC_LSFT, KC_LSFT, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
-              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_SYMBOL, KC_SPC), LT(_NAV, KC_ESC), LT(_NAV, KC_ENT), KC_LEAD, KC_TAB,  KC_BSPC, KC_RALT
+      LT(_NAV, KC_ESC),       KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
+      MT(MOD_LCTL, KC_BSPC),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_RGUI, _______,
+      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,   KC_LCTRL, KC_LSFT, KC_LSFT, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYMBOL, KC_ESC), LT(_NAV, KC_ENT), KC_LSFT, KC_TAB,  KC_BSPC, KC_RALT
     ),
 /*
  * Lower Layer: Symbols
@@ -399,7 +399,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     // left row 1
     case JQ:
       if (pressed) {
-        SEND_STRING("\\");
+        // shift + option + 7
+        tap_code16(S(A(KC_7)));
+        // SEND_STRING("\\");
       }
       break;
     case JW:
@@ -409,12 +411,15 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case JE:
       if (pressed) {
-        SEND_STRING("<");
+        tap_code16(KC_GRAVE);
+        // SEND_STRING("<");
       }
       break;
     case JR:
       if (pressed) {
-        SEND_STRING(">");
+        // l-shift + kc_grave
+        tap_code16(S(KC_GRAVE));
+        // SEND_STRING(">");
       }
       break;
     case JT:
@@ -426,12 +431,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     // left row 2
     case JA:
       if (pressed) {
-        SEND_STRING("{");
+        // shift + option + 8
+        // SEND_STRING("{");
+        tap_code16(S(A(KC_8)));
       }
       break;
     case JS:
       if (pressed) {
-        SEND_STRING("}");
+        // shift + option + 9
+        tap_code16(S(A(KC_9)));
+        // SEND_STRING("}");
       }
       break;
     case JD:
@@ -446,7 +455,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case JG:
       if (pressed) {
-        SEND_STRING("|");
+        // option + 7
+        tap_code16(A(KC_7));
+        // SEND_STRING("|");
       }
       break;
 
@@ -625,39 +636,28 @@ void encoder_update_user(uint8_t index, bool clockwise) {
  *k
  */
 
-LEADER_EXTERNS();
+// LEADER_EXTERNS();
 
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
+// void matrix_scan_user(void) {
+//   LEADER_DICTIONARY() {
+//     leading = false;
+//     leader_end();
 
-    SEQ_ONE_KEY(KC_F) {
-      SEND_STRING("<");
-    }
-    SEQ_TWO_KEYS(KC_F, KC_J) {
-      SEND_STRING(">");
-    }
+//     SEQ_ONE_KEY(KC_F) {
+//       SEND_STRING("<");
+//     }
+//     SEQ_TWO_KEYS(KC_F, KC_J) {
+//       SEND_STRING(">");
+//     }
+//   }
+// }
 
-    SEQ_ONE_KEY(KC_D) {
-      SEND_STRING("(");
-    }
-    SEQ_TWO_KEYS(KC_D, KC_J) {
-      SEND_STRING(")");
-    }
 
-    SEQ_ONE_KEY(KC_S) {
-      SEND_STRING("{");
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(_NAV, KC_SPC):
+            return true;
+        default:
+            return false;
     }
-    SEQ_TWO_KEYS(KC_S, KC_J) {
-      SEND_STRING("}");
-    }
-
-    SEQ_ONE_KEY(KC_A) {
-      SEND_STRING("[");
-    }
-    SEQ_TWO_KEYS(KC_A, KC_J) {
-      SEND_STRING("]");
-    }
-  }
 }
