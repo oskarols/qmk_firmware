@@ -48,5 +48,5 @@
 #define TAPPING_FORCE_HOLD_PER_KEY
 
 // time to complete the combo sequence
-# define LEADER_TIMEOUT 150
-# define LEADER_PER_KEY_TIMING 100
+// # define LEADER_TIMEOUT 150
+// # define LEADER_PER_KEY_TIMING 150
