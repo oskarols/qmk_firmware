@@ -37,6 +37,16 @@
 
 # define COMBO_COUNT 34
 
+// decreased from default of 200 to get fewer false positives when typing normally
+# define COMBO_TERM 50
+
+# define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 24
+
+// try to fix the space layer problems
+# define PERMISSIVE_HOLD
+
+#define TAPPING_FORCE_HOLD_PER_KEY
+
 // time to complete the combo sequence
 # define LEADER_TIMEOUT 150
 # define LEADER_PER_KEY_TIMING 100
