@@ -605,9 +605,9 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         }
         else if (IS_LAYER_ON(_SYMBOL)) {
             if (clockwise) {
-                tap_code16(C(KC_Y));
+                tap_code16(G(KC_Y));
             } else {
-                tap_code16(C(KC_Z));
+                tap_code16(G(KC_Z));
             }
         }
         else if (IS_LAYER_ON(_NAV)) {
