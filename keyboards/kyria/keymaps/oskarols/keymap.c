@@ -21,15 +21,15 @@
 #include "sendstring_swedish.h"
 
 enum layers {
-    _QWERTY = 0,
-    _SYMBOL,
+    _MAC_QWERTY = 0,
+    _MAC_SYMBOL,
     _NAV,
     _ADJUST
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
- * Base Layer: QWERTY
+ * Base Layer: Mac QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
@@ -42,14 +42,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_QWERTY] = LAYOUT(
+    [_MAC_QWERTY] = LAYOUT(
       MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
       MT(MOD_LCTL, KC_BSPC),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L,    KC_RGUI, _______,
       KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,   KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
-              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYMBOL, KC_ESC), LT(_NAV, KC_ENT), KC_LSFT, KC_TAB,  KC_BSPC, KC_MPLY
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_MAC_SYMBOL, KC_ESC), LT(_NAV, KC_ENT), KC_LSFT, KC_TAB,  KC_BSPC, KC_MPLY
     ),
 /*
- * Lower Layer: Symbols
+ * Lower Layer: Mac Symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |  \   |  /   |  <   |  >   |  =   |                              |   $  |  @   |  #   |  &   |      |        |
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_SYMBOL] = LAYOUT(
+    [_MAC_SYMBOL] = LAYOUT(
       _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, _______, _______, _______, _______, KC_BSLS,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
@@ -175,11 +175,11 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
+        case _MAC_QWERTY:
+            oled_write_P(PSTR("Mac Qwerty\n"), false);
             break;
-        case _SYMBOL:
-            oled_write_P(PSTR("Symbol\n"), false);
+        case _MAC_SYMBOL:
+            oled_write_P(PSTR("Mac Symbol\n"), false);
             break;
         case _NAV:
             oled_write_P(PSTR("Navigation\n"), false);
@@ -596,7 +596,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
     // right side encoder
     else if (index == 1) {
-        if (IS_LAYER_ON(_QWERTY)) {
+        if (IS_LAYER_ON(_MAC_QWERTY)) {
             // Mouse wheel scroll
             if (clockwise) {
                 tap_code(KC_WH_D);
@@ -604,7 +604,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_WH_U);
             }
         }
-        else if (IS_LAYER_ON(_SYMBOL)) {
+        else if (IS_LAYER_ON(_MAC_SYMBOL)) {
             if (clockwise) {
                 tap_code16(G(KC_Y));
             } else {
