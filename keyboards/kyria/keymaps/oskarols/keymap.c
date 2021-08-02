@@ -22,10 +22,25 @@
 
 enum layers {
     _MAC_QWERTY = 0,
-    _MAC_SYMBOL,
+    _QWERTY,
+    _MSYM, // Mac Symbol
+    _SYM, // Symbol
     _NAV,
     _ADJUST
 };
+
+// Left-hand home row mods
+#define HOME_A RCTL_T(KC_A)
+#define HOME_S RSFT_T(KC_S)
+#define HOME_D LALT_T(KC_D)
+#define HOME_F RGUI_T(KC_F)
+
+// Right-hand home row mods
+// CMD ALT SHIFT CTRL
+#define HOME_J RGUI_T(KC_J)
+#define HOME_K LALT_T(KC_K)
+#define HOME_L RSFT_T(KC_L)
+#define HOME_SCLN RCTL_T(KC_SCLN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -34,7 +49,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/BS |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
+ * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | Cmd  |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Caps |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter| Space| Tab  | Bksp | Play |
+ *                        |      |      | Alt  | NAV  | SYMB |  | ADJ  | SYM  |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_MAC_QWERTY] = LAYOUT(
+      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                        KC_Y,  KC_U,    KC_I,    KC_O,    KC_P,      _______,
+      MT(MOD_LCTL, KC_BSPC),  HOME_A, HOME_S, HOME_D, HOME_F, KC_G,                                        KC_H,  HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, _______,
+      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS, KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH,   MO(_ADJUST),
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_MSYM, KC_ESC), LT(_ADJUST, KC_ENT), LT(_MSYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
+    ),
+
+/*
+ * Base Layer: QWERTY
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | Caps |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -42,14 +78,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_MAC_QWERTY] = LAYOUT(
+    [_QWERTY] = LAYOUT(
       MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
       MT(MOD_LCTL, KC_BSPC),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L,    KC_RGUI, _______,
       KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,   KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
-              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_MAC_SYMBOL, KC_ESC), LT(_NAV, KC_ENT), KC_LSFT, KC_TAB,  KC_BSPC, KC_MPLY
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYM, KC_ESC), LT(_NAV, KC_ENT), KC_LSFT, KC_TAB,  KC_BSPC, KC_MPLY
     ),
 /*
  * Lower Layer: Mac Symbols
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |  \   |  /   |  <   |  >   |  =   |                              |   $  |  #   |  @   |  &   |      |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |  {   |  }   |  (   |  )   |  |   |                              |   %  |  +   |  '   |  "   |  `   |   ´    |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |  !   |  ?   |  [   |  ]   |      |      |      |  |      |      |      |  *   |  ^   |  ~   |      |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_MSYM] = LAYOUT(
+      _______, S(A(KC_7)), S(KC_7), KC_GRAVE, S(KC_GRAVE), S(KC_0),                                   A(KC_4), S(KC_3), A(KC_2), S(KC_6), _______, _______,
+      _______, S(A(KC_8)), S(A(KC_9)), S(KC_8), S(KC_9), A(KC_7),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), S(KC_EQL), KC_EQL,
+      _______, S(KC_1),    S(KC_MINS), A(KC_8), A(KC_9), _______, _______, _______, _______, _______, _______, S(KC_BSLS), S(KC_RBRC), A(KC_RBRC), _______, _______,
+                                       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+/*
+ * Lower Layer: Symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |  \   |  /   |  <   |  >   |  =   |                              |   $  |  @   |  #   |  &   |      |        |
@@ -62,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_MAC_SYMBOL] = LAYOUT(
+    [_SYM] = LAYOUT(
       _______, S(A(KC_7)), S(KC_7), KC_GRAVE, S(KC_GRAVE), S(KC_0),                                   A(KC_4), A(KC_2), S(KC_3), S(KC_6), _______, _______,
       _______, S(A(KC_8)), S(A(KC_9)), S(KC_8), S(KC_9), A(KC_7),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), S(KC_EQL), KC_EQL,
       _______, S(KC_1),    S(KC_MINS), A(KC_8), A(KC_9), _______, _______, _______, _______, _______, _______, S(KC_BSLS), S(KC_RBRC), A(KC_RBRC), _______, _______,
@@ -178,8 +234,14 @@ static void render_status(void) {
         case _MAC_QWERTY:
             oled_write_P(PSTR("Mac Qwerty\n"), false);
             break;
-        case _MAC_SYMBOL:
+        case _QWERTY:
+            oled_write_P(PSTR("Qwerty\n"), false);
+            break;
+        case _MSYM:
             oled_write_P(PSTR("Mac Symbol\n"), false);
+            break;
+        case _SYM:
+            oled_write_P(PSTR("Symbol\n"), false);
             break;
         case _NAV:
             oled_write_P(PSTR("Navigation\n"), false);
@@ -200,9 +262,9 @@ static void render_status(void) {
 
 void oled_task_user(void) {
     if (is_keyboard_master()) {
-        render_kyria_logo();
-    } else {
         render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+    } else {
+        render_kyria_logo();
     }
 }
 #endif
@@ -604,7 +666,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_WH_U);
             }
         }
-        else if (IS_LAYER_ON(_MAC_SYMBOL)) {
+        else if (IS_LAYER_ON(_MSYM)) {
             if (clockwise) {
                 tap_code16(G(KC_Y));
             } else {
