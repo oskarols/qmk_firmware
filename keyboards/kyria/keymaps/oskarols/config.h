@@ -45,7 +45,15 @@
 // try to fix the space layer problems
 # define PERMISSIVE_HOLD
 
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD_PER_KEY
+
+// Prevent normal rollover on alphas from accidentally triggering mods.
+# define IGNORE_MOD_TAP_INTERRUPT
+
+// enables writing e.g. "camelCase" with home row mods
+// has downside of disabling holding a char to output the char
+# define TAPPING_FORCE_HOLD
 
 // time to complete the combo sequence
 // # define LEADER_TIMEOUT 150
