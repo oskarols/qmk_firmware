@@ -26,7 +26,8 @@ enum layers {
     _MSYM, // Mac Symbol
     _SYM, // Symbol
     _NAV,
-    _ADJUST
+    _ADJUST,
+    _MAC_HOMEROW,
 };
 
 // Mac Home Rows CASG
@@ -71,14 +72,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | LShift |   Z  |   X  |   C  |   V  |   B  | Caps |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter| Space| Tab  | Bksp | Play |
- *                        |      |      | Alt  | NAV  | SYMB |  | ADJ  | SYM  |      |      |      |
+ *                        |      |      | Alt  | NAV  | SYMB |  | HR  | SYM  |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_MAC_QWERTY] = LAYOUT(
-      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                        KC_Y,  KC_U,    KC_I,    KC_O,    KC_P,      _______,
-      MT(MOD_LCTL, KC_BSPC),  MHOME_A, MHOME_S, MHOME_D, MHOME_F, KC_G,                                    KC_H,  MHOME_J,  MHOME_K,  MHOME_L,  MHOME_SCLN, _______,
-      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS, KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH,   MO(_ADJUST),
-              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_MSYM, KC_ESC), LT(_ADJUST, KC_ENT), LT(_MSYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
+      MT(MOD_RGUI, KC_ESC),   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,  KC_U,    KC_I,    KC_O,    KC_P,       _______,
+      MT(MOD_LCTL, KC_BSPC),  MHOME_A, MHOME_S, MHOME_D, MHOME_F, KC_G,                                        KC_H,  MHOME_J, MHOME_K, MHOME_L, MHOME_SCLN, _______,
+      KC_LSFT,                KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_CAPS, KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH,    MO(_ADJUST),
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_MSYM, KC_ESC), LT(_MAC_HOMEROW, KC_ENT), LT(_MSYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
     ),
 
 /*
@@ -179,6 +180,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10,                                      _______, _______, _______, _______, DF(_QWERTY), DF(_MAC_QWERTY),
       _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,                                      _______, KC_BRIU, _______, _______, _______, _______,
       _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, _______, _______, _______, _______, KC_BRID, _______, _______, RESET,   _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
+/*
+ * Mac: Layer used as overlay to enable homerow mods in e.g. symbol layer
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |      |  Ctl |  Alt |  Sft |  Cmd |                              |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_HOMEROW] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, MHOME_A, MHOME_S, MHOME_D, MHOME_F, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 // /*
