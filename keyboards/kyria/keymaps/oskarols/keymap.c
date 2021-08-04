@@ -29,33 +29,34 @@ enum layers {
     _ADJUST
 };
 
-// Mac Home Rows
+// Mac Home Rows CASG
+
 
 // Left-hand home row mods
 #define MHOME_A RCTL_T(KC_A)
-#define MHOME_S RSFT_T(KC_S)
-#define MHOME_D LALT_T(KC_D)
+#define MHOME_S LALT_T(KC_S)
+#define MHOME_D RSFT_T(KC_D)
 #define MHOME_F RGUI_T(KC_F)
 
 // Right-hand home row mods
 // CMD ALT SHIFT CTRL
 #define MHOME_J RGUI_T(KC_J)
-#define MHOME_K LALT_T(KC_K)
-#define MHOME_L RSFT_T(KC_L)
+#define MHOME_K RSFT_T(KC_K)
+#define MHOME_L LALT_T(KC_L)
 #define MHOME_SCLN RCTL_T(KC_SCLN)
 
 // All others (Windows, Linux etc) Home Rows
 
 #define HOME_A RGUI_T(KC_A)
-#define HOME_S RSFT_T(KC_S)
-#define HOME_D LALT_T(KC_D)
+#define HOME_S LALT_T(KC_S)
+#define HOME_D RSFT_T(KC_D)
 #define HOME_F RCTL_T(KC_F)
 
 // Right-hand home row mods
 // CMD ALT SHIFT CTRL
 #define HOME_J RCTL_T(KC_J)
-#define HOME_K LALT_T(KC_K)
-#define HOME_L RSFT_T(KC_L)
+#define HOME_K RSFT_T(KC_K)
+#define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
