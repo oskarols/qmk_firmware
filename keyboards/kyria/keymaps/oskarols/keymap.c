@@ -292,28 +292,59 @@ static void render_status(void) {
 
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
-    switch (get_highest_layer(layer_state)) {
+
+    uint8_t layer = layer_state ? biton(layer_state) : biton32(default_layer_state);
+
+
+    switch (layer) {
         case _MAC_QWERTY:
-            oled_write_P(PSTR("Mac Qwerty\n"), false);
+            oled_write_P(PSTR("Mac Qwerty "), false);
             break;
         case _QWERTY:
-            oled_write_P(PSTR("Qwerty\n"), false);
+            oled_write_P(PSTR("Qwerty "), false);
             break;
         case _MSYM:
-            oled_write_P(PSTR("Mac Symbol\n"), false);
+            oled_write_P(PSTR("Mac Symbol "), false);
             break;
         case _SYM:
-            oled_write_P(PSTR("Symbol\n"), false);
+            oled_write_P(PSTR("Symbol "), false);
             break;
         case _NAV:
-            oled_write_P(PSTR("Navigation\n"), false);
+            oled_write_P(PSTR("Navigation "), false);
             break;
         case _ADJUST:
-            oled_write_P(PSTR("Adjust\n"), false);
+            oled_write_P(PSTR("Adjust "), false);
+            break;
+        case _MAC_HOMEROW:
+            oled_write_P(PSTR("Mods "), false);
             break;
         default:
-            oled_write_P(PSTR("Undefined\n"), false);
+            oled_write_P(PSTR("Undefined "), false);
     }
+    oled_write_P(PSTR("\n"), false);
+
+    // switch (get_highest_layer(layer_state)) {
+    //     case _MAC_QWERTY:
+    //         oled_write_P(PSTR("Mac Qwerty\n"), false);
+    //         break;
+    //     case _QWERTY:
+    //         oled_write_P(PSTR("Qwerty\n"), false);
+    //         break;
+    //     case _MSYM:
+    //         oled_write_P(PSTR("Mac Symbol\n"), false);
+    //         break;
+    //     case _SYM:
+    //         oled_write_P(PSTR("Symbol\n"), false);
+    //         break;
+    //     case _NAV:
+    //         oled_write_P(PSTR("Navigation\n"), false);
+    //         break;
+    //     case _ADJUST:
+    //         oled_write_P(PSTR("Adjust\n"), false);
+    //         break;
+    //     default:
+    //         oled_write_P(PSTR("Undefined\n"), false);
+    // }
 
     // Host Keyboard LED Status
     uint8_t led_usb_state = host_keyboard_leds();
