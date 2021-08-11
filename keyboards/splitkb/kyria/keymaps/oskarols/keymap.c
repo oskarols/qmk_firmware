@@ -738,7 +738,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 
 #ifdef ENCODER_ENABLE
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     // Probably the left side encoder (not enabled)
     if (index == 0) {
         // mouse wheel
@@ -774,6 +774,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             }
         }
     }
+    return false;
 }
 #endif
 
