@@ -23,6 +23,7 @@
 enum layers {
     _MAC_QWERTY = 0,
     _QWERTY,
+    _QWERTY_GAMING,
     _MSYM, // Mac Symbol
     _SYM, // Symbol
     _NAV,
@@ -103,6 +104,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,   KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
               KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYM, KC_ESC), LT(_HOMEROW, KC_ENT), LT(_SYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
     ),
+
+/*
+ * Base Layer: QWERTY GAMING
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Caps |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter|LShift| Tab  | Bksp | Play |
+ *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_QWERTY_GAMING] = LAYOUT(
+      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
+      MT(MOD_LCTL, KC_BSPC),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, _______,
+      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_CAPS,   KC_LCTRL, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYM, KC_ESC), LT(_HOMEROW, KC_ENT), LT(_SYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
+    ),
 /*
  * Lower Layer: Mac Symbols
  *
@@ -167,7 +189,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Adjust Layer: Function keys, RGB, changing default layer
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |  F1  |  F2  |  F3  | F10  |                              |      |      |      |      | Wind | Mac    |
+ * |        |      |  F1  |  F2  |  F3  | F10  |                              |      |      |      |Gaming| Win  | Mac    |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |  F4  |  F5  |  F6  | F11  |                              |      | BRT↑ |      |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -178,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10,                                      _______, _______, _______, _______, DF(_QWERTY), DF(_MAC_QWERTY),
+      _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F10,                                      _______, _______, _______, DF(_QWERTY_GAMING), DF(_QWERTY), DF(_MAC_QWERTY),
       _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,                                      _______, KC_BRIU, _______, _______, _______, _______,
       _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, _______, _______, _______, _______, KC_BRID, _______, _______, RESET,   _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -302,6 +324,9 @@ static void render_status(void) {
             break;
         case _QWERTY:
             oled_write_P(PSTR("Qwerty "), false);
+            break;
+        case _QWERTY_GAMING:
+            oled_write_P(PSTR("Gaming "), false);
             break;
         case _MSYM:
             oled_write_P(PSTR("Mac Symbol "), false);
