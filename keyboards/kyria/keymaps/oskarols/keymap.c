@@ -38,7 +38,8 @@ enum CUSTOM_KEYCODES {
   // To not have to write the space afterwards on ~ and ^
   // Basically not used this way in Swedish anyway.
   CK_TILDE = SAFE_RANGE,
-  CK_CARET = SAFE_RANGE
+  CK_CARET,
+  CK_BTCKS
 };
 
 // Mac Home Rows CASG
@@ -150,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_MSYM] = LAYOUT(
       _______, S(A(KC_7)), S(KC_7), KC_GRAVE, S(KC_GRAVE), S(KC_0),                                   A(KC_4), S(KC_3), A(KC_2), S(KC_6), _______, _______,
-      _______, S(A(KC_8)), S(A(KC_9)), S(KC_8), S(KC_9), A(KC_7),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), S(KC_EQL), KC_EQL,
+      _______, S(A(KC_8)), S(A(KC_9)), S(KC_8), S(KC_9), A(KC_7),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), CK_BTCKS, KC_EQL,
       _______, S(KC_1),    S(KC_MINS), A(KC_8), A(KC_9), _______, _______, _______, _______, _______, _______, S(KC_BSLS), CK_CARET, CK_TILDE, _______, _______,
                                        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -170,8 +171,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_SYM] = LAYOUT(
       _______, C(A(KC_MINS)), S(KC_7), KC_NUBS, S(KC_NUBS), S(KC_0),                                   C(A(KC_4)), S(KC_3), C(A(KC_2)), S(KC_6), _______, _______,
-      _______, C(A(KC_7)), C(A(KC_0)), S(KC_8), S(KC_9), C(A(KC_NUBS)),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), S(KC_EQL), KC_EQL,
-      _______, S(KC_1),    S(KC_MINS), C(A(KC_8)), C(A(KC_9)), _______, _______, _______, _______, _______, _______, S(KC_BSLS), S(KC_RBRC), C(A(KC_RBRC)), _______, _______,
+      _______, C(A(KC_7)), C(A(KC_0)), S(KC_8), S(KC_9), C(A(KC_NUBS)),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), CK_BTCKS, KC_EQL,
+      _______, S(KC_1),    S(KC_MINS), C(A(KC_8)), C(A(KC_9)), _______, _______, _______, _______, _______, _______, S(KC_BSLS), CK_CARET, CK_TILDE, _______, _______,
                                        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -400,7 +401,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case CK_TILDE:
       if (record->event.pressed) {
-        tap_code16(A(KC_RBRC));
+        uint16_t keycode = IS_LAYER_ON(_MSYM)
+          ? A(KC_RBRC)
+          : C(A(KC_RBRC));
+        tap_code16(keycode);
         tap_code16(KC_SPC);
       }
       return false;
@@ -410,11 +414,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(KC_SPC);
       }
       return false;
+    case CK_BTCKS:
+      if (record->event.pressed) {
+        tap_code16(S(KC_EQL));
+        tap_code16(KC_SPC);
+      }
+      return false;
     default:
       return true;
   }
 }
-
 
 /*
  *  _  __             ____                _
