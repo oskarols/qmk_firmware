@@ -326,6 +326,8 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
 
+    // works better than `get_highest_layer` since temp "overlay" layers like Nav
+    // Wouldn't show up properly with `get_highest_layer`
     uint8_t layer = layer_state ? biton(layer_state) : biton32(default_layer_state);
 
 
@@ -358,29 +360,6 @@ static void render_status(void) {
             oled_write_P(PSTR("Undefined "), false);
     }
     oled_write_P(PSTR("\n"), false);
-
-    // switch (get_highest_layer(layer_state)) {
-    //     case _MAC_QWERTY:
-    //         oled_write_P(PSTR("Mac Qwerty\n"), false);
-    //         break;
-    //     case _QWERTY:
-    //         oled_write_P(PSTR("Qwerty\n"), false);
-    //         break;
-    //     case _MSYM:
-    //         oled_write_P(PSTR("Mac Symbol\n"), false);
-    //         break;
-    //     case _SYM:
-    //         oled_write_P(PSTR("Symbol\n"), false);
-    //         break;
-    //     case _NAV:
-    //         oled_write_P(PSTR("Navigation\n"), false);
-    //         break;
-    //     case _ADJUST:
-    //         oled_write_P(PSTR("Adjust\n"), false);
-    //         break;
-    //     default:
-    //         oled_write_P(PSTR("Undefined\n"), false);
-    // }
 
     // Host Keyboard LED Status
     uint8_t led_usb_state = host_keyboard_leds();
