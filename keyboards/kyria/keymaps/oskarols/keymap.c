@@ -501,37 +501,6 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 
-/*  _                   _             _  __
- * | |    ___  __ _  __| | ___ _ __  | |/ /___ _   _
- * | |   / _ \/ _` |/ _` |/ _ \ '__| | ' // _ \ | | |
- * | |__|  __/ (_| | (_| |  __/ |    | . \  __/ |_| |
- * |_____\___|\__,_|\__,_|\___|_|    |_|\_\___|\__, |
- *                                             |___/
- *   ____                _
- *  / ___|___  _ __ ___ | |__   ___  ___
- * | |   / _ \| '_ ` _ \| '_ \ / _ \/ __|
- * | |__| (_) | | | | | | |_) | (_) \__ \
- *  \____\___/|_| |_| |_|_.__/ \___/|___/
- *k
- */
-
-// LEADER_EXTERNS();
-
-// void matrix_scan_user(void) {
-//   LEADER_DICTIONARY() {
-//     leading = false;
-//     leader_end();
-
-//     SEQ_ONE_KEY(KC_F) {
-//       SEND_STRING("<");
-//     }
-//     SEQ_TWO_KEYS(KC_F, KC_J) {
-//       SEND_STRING(">");
-//     }
-//   }
-// }
-
-
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(_NAV, KC_SPC):
