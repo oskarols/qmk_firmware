@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | Cmd  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Caps |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Hypr |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter| Space| Tab  | Bksp | Play |
  *                        |      |      | Alt  | NAV  | SYMB |  | HR  | SYM  |      |      |      |
@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       MT(MOD_RGUI, KC_ESC),   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,  KC_U,    KC_I,    KC_O,    KC_P,       _______,
       MT(MOD_LCTL, KC_BSPC),  MHOME_A, MHOME_S, MHOME_D, MHOME_F, KC_G,                                        KC_H,  MHOME_J, MHOME_K, MHOME_L, MHOME_SCLN, _______,
       KC_LSFT,                KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_HYPR, KC_LSFT, KC_LSFT, KC_CAPS, KC_N,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH,    MO(_ADJUST),
-              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_MSYM, KC_ESC), LT(_MAC_HOMEROW, KC_ENT), LT(_MSYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), KC_MEH, LT(_MAC_HOMEROW, KC_ENT), LT(_MSYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
     ),
 
 /*
