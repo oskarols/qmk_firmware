@@ -35,7 +35,7 @@
 // hardcode setting the master to always be on right side
 # define MASTER_RIGHT
 
-# define COMBO_COUNT 34
+# define COMBO_COUNT 4
 
 // decreased from default of 200 to get fewer false positives when typing normally
 # define COMBO_TERM 50
