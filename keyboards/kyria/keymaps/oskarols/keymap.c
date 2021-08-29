@@ -170,9 +170,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYM] = LAYOUT(
-      _______, C(A(KC_MINS)), S(KC_7), KC_NUBS, S(KC_NUBS), S(KC_0),                                   C(A(KC_4)), S(KC_3), C(A(KC_2)), S(KC_6), _______, _______,
-      _______, C(A(KC_7)), C(A(KC_0)), S(KC_8), S(KC_9), C(A(KC_NUBS)),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), CK_BTCKS, KC_EQL,
-      _______, S(KC_1),    S(KC_MINS), C(A(KC_8)), C(A(KC_9)), _______, _______, _______, _______, _______, _______, S(KC_BSLS), CK_CARET, CK_TILDE, _______, _______,
+      _______, ALGR(KC_MINS), S(KC_7), KC_NUBS, S(KC_NUBS), S(KC_0),                                        ALGR(KC_4), S(KC_3), ALGR(KC_2), S(KC_6), _______, _______,
+      _______, ALGR(KC_7), ALGR(KC_0), S(KC_8), S(KC_9), ALGR(KC_NUBS),                                     S(KC_5), KC_MINS, KC_BSLS, S(KC_2), CK_BTCKS, KC_EQL,
+      _______, S(KC_1),    S(KC_MINS), ALGR(KC_8), ALGR(KC_9), _______, _______, _______, _______, _______, _______, S(KC_BSLS), CK_CARET, CK_TILDE, _______, _______,
                                        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -403,7 +403,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         uint16_t keycode = IS_LAYER_ON(_MSYM)
           ? A(KC_RBRC)
-          : C(A(KC_RBRC));
+          : ALGR(KC_RBRC);
         tap_code16(keycode);
         tap_code16(KC_SPC);
       }
