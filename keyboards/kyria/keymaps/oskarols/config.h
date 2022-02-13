@@ -40,7 +40,7 @@
 // decreased from default of 200 to get fewer false positives when typing normally
 # define COMBO_TERM 50
 
-# define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 24
+# define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 100
 
 // try to fix the space layer problems
 # define PERMISSIVE_HOLD
@@ -58,3 +58,12 @@
 // time to complete the combo sequence
 // # define LEADER_TIMEOUT 150
 // # define LEADER_PER_KEY_TIMING 150
+
+// Delay between pressing a wheel key and wheel movement
+#define MOUSEKEY_WHEEL_DELAY	100
+// Time between wheel movements
+#define MOUSEKEY_WHEEL_INTERVAL	20
+// Maximum number of scroll steps per scroll action
+#define MOUSEKEY_WHEEL_MAX_SPEED	20
+// Time until maximum scroll speed is reached
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 20
