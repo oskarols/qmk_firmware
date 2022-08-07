@@ -21,8 +21,8 @@
 #include "sendstring_swedish.h"
 
 enum layers {
-    _MAC_QWERTY = 0,
-    _QWERTY,
+    _QWERTY = 0,
+    _MAC_QWERTY,
     _QWERTY_GAMING,
     _MSYM, // Mac Symbol
     _SYM, // Symbol
@@ -75,6 +75,27 @@ enum CUSTOM_KEYCODES {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
+ * Base Layer: QWERTY
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Gui  |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter|LShift| Tab  | Bksp | Play |
+ *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_QWERTY] = LAYOUT(
+      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
+      MT(MOD_LCTL, KC_BSPC),  HOME_A, HOME_S, HOME_D, HOME_F, KC_G,                                          KC_H,    HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, _______,
+      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    KC_LGUI,   KC_LSFT, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
+              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYM, KC_ESC), LT(_HOMEROW, KC_ENT), LT(_SYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
+    ),
+    
+/*
  * Base Layer: Mac QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
@@ -95,26 +116,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), KC_MEH, LT(_MAC_HOMEROW, KC_ENT), LT(_MSYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
     ),
 
-/*
- * Base Layer: QWERTY
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Gui  |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter|LShift| Tab  | Bksp | Play |
- *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_QWERTY] = LAYOUT(
-      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
-      MT(MOD_LCTL, KC_BSPC),  HOME_A, HOME_S, HOME_D, HOME_F, KC_G,                                          KC_H,    HOME_J,  HOME_K,  HOME_L,  HOME_SCLN, _______,
-      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    KC_LGUI,   KC_LSFT, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
-              KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYM, KC_ESC), LT(_HOMEROW, KC_ENT), LT(_SYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
-    ),
 
 /*
  * Base Layer: QWERTY GAMING
@@ -122,18 +123,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/BS |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
+ * |Ctrl |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Caps |LShift|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Shift | Adjust|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter|LShift| Tab  | Bksp | Play |
  *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY_GAMING] = LAYOUT(
-      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
-      MT(MOD_LCTL, KC_BSPC),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, _______,
-      KC_LSFT,                KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_LGUI,   KC_LSFT, KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
+      MT(MOD_RGUI, KC_ESC),   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BTN1,
+      MT(MOD_LSFT, KC_TILD),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_BTN2,
+      KC_LCTRL,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_LSFT,  MO(_ADJUST), KC_LSFT, KC_CAPS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MO(_ADJUST),
               KC_LGUI, KC_DEL, MT(MOD_LALT, KC_ENT), LT(_NAV, KC_SPC), LT(_SYM, KC_ESC), LT(_HOMEROW, KC_ENT), LT(_SYM, KC_SPC), KC_TAB,  KC_BSPC, KC_MPLY
     ),
 /*
