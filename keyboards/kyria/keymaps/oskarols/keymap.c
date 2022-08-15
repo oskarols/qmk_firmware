@@ -70,7 +70,7 @@ enum CUSTOM_KEYCODES {
 // CMD ALT SHIFT CTRL
 #define HOME_J RCTL_T(KC_J)
 #define HOME_K RSFT_T(KC_K)
-#define HOME_L RALT_T(KC_L)
+#define HOME_L LALT_T(KC_L) // LALT due to being ALT GR
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -123,9 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |NAV/ESC |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
+ * |Ctrl    |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | GUI  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Shift | Adjust|  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Shift | Adj |  |LShift|Caps  |   N  |   M  | ,  ; | . :  | - _  |  ADJ   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | GUI  | Del  | Enter| Space| Esc  |  | Enter|LShift| Tab  | Bksp | Play |
  *                        |      |      | Alt  | NAV  | SYMB |  | SYMB |      |      |      |      |
@@ -475,19 +475,19 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
     // right side encoder
     else if (index == 1) {
-        if (IS_LAYER_ON(_MAC_QWERTY)) {
+        if (IS_LAYER_ON(_QWERTY)) {
             // Mouse wheel scroll
             if (clockwise) {
-                tap_code(KC_WH_D);
+                tap_code(KC_PGUP);
             } else {
-                tap_code(KC_WH_U);
+                tap_code(KC_PGDOWN);
             }
         }
-        else if (IS_LAYER_ON(_MSYM)) {
+        else if (IS_LAYER_ON(_SYM)) {
             if (clockwise) {
-                tap_code16(G(KC_Y));
+                tap_code16(C(KC_Y));
             } else {
-                tap_code16(G(KC_Z));
+                tap_code16(C(KC_Z));
             }
         }
         else if (IS_LAYER_ON(_NAV)) {
